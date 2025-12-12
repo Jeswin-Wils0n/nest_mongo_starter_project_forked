@@ -19,6 +19,18 @@ export class Post {
     required: true,
   })
   creatorUser: mongoose.Types.ObjectId;
+
+   @Prop({
+    type: Number,
+    default: 0,
+  })
+  likesCount: number;
+
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    default: [],
+  })
+  likedBy: mongoose.Types.ObjectId[];
 }
 
 export type PostDocument = HydratedDocument<Post>;

@@ -50,4 +50,32 @@ export class PostController {
   remove(@Param('id') id: string) {
     return this.postService.remove(id);
   }
+
+  @Post(':id/like')
+  likePost(@Param('id') id: string, @Req() request: Request) {
+    const requestUser = (request as any).user as any | undefined;
+
+    if (!requestUser) {
+      throw new NotFoundException('User not found in request');
+    }
+
+    return this.postService.likePost(id, requestUser.sub);
+  }
+
+  @Delete(':id/like')
+  unlikePost(@Param('id') id: string, @Req() request: Request) {
+    const requestUser = (request as any).user as any | undefined;
+
+    if (!requestUser) {
+      throw new NotFoundException('User not found in request');
+    }
+
+    return this.postService.unlikePost(id, requestUser.sub);
+  }
+
+  @Get(':id/likes')
+  getPostLikes(@Param('id') id: string) {
+    return this.postService.getPostLikes(id);
+  }
+
 }
